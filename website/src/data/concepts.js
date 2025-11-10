@@ -86,7 +86,7 @@ export const philosophicalConcepts = [
     author: 'Alenda Y. Chang',
     games: ['Atomic Heart', 'Horizon Zero Dawn'],
     visualizationType: 'spectrum',
-    paperQuote: 'The game's apocalyptic scene is a vivid microcosm of unbridled technological growth, reflecting real-world worries about its ecological impact.',
+    paperQuote: 'The game\'s apocalyptic scene is a vivid microcosm of unbridled technological growth, reflecting real-world worries about its ecological impact.',
   },
 
   {
@@ -119,7 +119,7 @@ export const philosophicalConcepts = [
     author: 'Langdon Winner',
     games: ['Atomic Heart', 'Bioshock'],
     visualizationType: 'layered-diagram',
-    paperQuote: 'The game's complex dance of technology, politics, and conservation challenges players to consider technological growth's social and political impacts.',
+    paperQuote: 'The game\'s complex dance of technology, politics, and conservation challenges players to consider technological growth\'s social and political impacts.',
     layers: [
       { name: 'Technology', description: 'Robots, automation, technical systems' },
       { name: 'Politics', description: 'Soviet ideology, power structures' },
