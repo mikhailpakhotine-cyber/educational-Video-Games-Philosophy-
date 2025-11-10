@@ -1,20 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { lazy, Suspense } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 
-// Pages
+// Always-loaded pages
 import Home from './pages/Home';
-import ConceptsHub from './pages/ConceptsHub';
-import TheoreticalFrameworks from './pages/TheoreticalFrameworks';
-import GamesAnalysis from './pages/GamesAnalysis';
-import AtomicHeart from './pages/AtomicHeart';
-import DetroitBecomeHuman from './pages/DetroitBecomeHuman';
-import HorizonZeroDawn from './pages/HorizonZeroDawn';
-import Bioshock from './pages/Bioshock';
-import Schedule from './pages/Schedule';
-import CourseOverview from './pages/CourseOverview';
-import Resources from './pages/Resources';
+
+// Lazy-loaded pages
+const ConceptsHub = lazy(() => import('./pages/ConceptsHub'));
+const TheoreticalFrameworks = lazy(() => import('./pages/TheoreticalFrameworks'));
+const GamesAnalysis = lazy(() => import('./pages/GamesAnalysis'));
+const AtomicHeart = lazy(() => import('./pages/games/AtomicHeart'));
+const DetroitBecomeHuman = lazy(() => import('./pages/games/DetroitBecomeHuman'));
+const HorizonZeroDawn = lazy(() => import('./pages/games/HorizonZeroDawn'));
+const Bioshock = lazy(() => import('./pages/games/Bioshock'));
+const Schedule = lazy(() => import('./pages/Schedule'));
+const CourseOverview = lazy(() => import('./pages/CourseOverview'));
+const Resources = lazy(() => import('./pages/Resources'));
 
 function App() {
   return (
@@ -29,21 +32,29 @@ function App() {
         <Header />
 
         <main className="flex-1 relative z-10">
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/concepts" element={<ConceptsHub />} />
-              <Route path="/frameworks" element={<TheoreticalFrameworks />} />
-              <Route path="/games" element={<GamesAnalysis />} />
-              <Route path="/games/atomic-heart" element={<AtomicHeart />} />
-              <Route path="/games/detroit" element={<DetroitBecomeHuman />} />
-              <Route path="/games/horizon" element={<HorizonZeroDawn />} />
-              <Route path="/games/bioshock" element={<Bioshock />} />
-              <Route path="/schedule" element={<Schedule />} />
-              <Route path="/course" element={<CourseOverview />} />
-              <Route path="/resources" element={<Resources />} />
-            </Routes>
-          </AnimatePresence>
+          <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center">
+              <div className="text-cyberpunk-gold text-2xl font-mono animate-pulse">
+                Loading...
+              </div>
+            </div>
+          }>
+            <AnimatePresence mode="wait">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/concepts" element={<ConceptsHub />} />
+                <Route path="/frameworks" element={<TheoreticalFrameworks />} />
+                <Route path="/games" element={<GamesAnalysis />} />
+                <Route path="/games/atomic-heart" element={<AtomicHeart />} />
+                <Route path="/games/detroit" element={<DetroitBecomeHuman />} />
+                <Route path="/games/horizon" element={<HorizonZeroDawn />} />
+                <Route path="/games/bioshock" element={<Bioshock />} />
+                <Route path="/schedule" element={<Schedule />} />
+                <Route path="/course" element={<CourseOverview />} />
+                <Route path="/resources" element={<Resources />} />
+              </Routes>
+            </AnimatePresence>
+          </Suspense>
         </main>
 
         <Footer />
