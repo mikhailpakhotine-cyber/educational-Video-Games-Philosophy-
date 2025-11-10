@@ -1,18 +1,18 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { philosophicalConcepts } from '../data/concepts';
 
-// Import all visualizations
-import CyborgTheory from '../components/visualizations/CyborgTheory';
-import RealityIllusion from '../components/visualizations/RealityIllusion';
-import TuringTest from '../components/visualizations/TuringTest';
-import BiocentricEthics from '../components/visualizations/BiocentricEthics';
-import EnvironmentalAwareness from '../components/visualizations/EnvironmentalAwareness';
-import MediumMessage from '../components/visualizations/MediumMessage';
-import SovietSymbolism from '../components/visualizations/SovietSymbolism';
-import IdentityTransformation from '../components/visualizations/IdentityTransformation';
-import NatureTechDialectic from '../components/visualizations/NatureTechDialectic';
-import ProceduralRhetoric from '../components/visualizations/ProceduralRhetoric';
+// Lazy load all visualizations to reduce initial bundle size
+const CyborgTheory = lazy(() => import('../components/visualizations/CyborgTheory'));
+const RealityIllusion = lazy(() => import('../components/visualizations/RealityIllusion'));
+const TuringTest = lazy(() => import('../components/visualizations/TuringTest'));
+const BiocentricEthics = lazy(() => import('../components/visualizations/BiocentricEthics'));
+const EnvironmentalAwareness = lazy(() => import('../components/visualizations/EnvironmentalAwareness'));
+const MediumMessage = lazy(() => import('../components/visualizations/MediumMessage'));
+const SovietSymbolism = lazy(() => import('../components/visualizations/SovietSymbolism'));
+const IdentityTransformation = lazy(() => import('../components/visualizations/IdentityTransformation'));
+const NatureTechDialectic = lazy(() => import('../components/visualizations/NatureTechDialectic'));
+const ProceduralRhetoric = lazy(() => import('../components/visualizations/ProceduralRhetoric'));
 
 export default function ConceptsHub() {
   const [selectedConcept, setSelectedConcept] = useState(0);
@@ -119,7 +119,15 @@ export default function ConceptsHub() {
           className="bg-cyberpunk-dark border-2 rounded-lg p-8"
           style={{ borderColor: `${currentConcept.color}30` }}
         >
-          {VisualizationComponent && <VisualizationComponent />}
+          <Suspense fallback={
+            <div className="text-center py-12">
+              <div className="text-cyberpunk-purple text-xl font-mono animate-pulse">
+                Loading visualization...
+              </div>
+            </div>
+          }>
+            {VisualizationComponent && <VisualizationComponent />}
+          </Suspense>
         </motion.div>
       </AnimatePresence>
 
